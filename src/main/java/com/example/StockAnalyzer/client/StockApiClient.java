@@ -25,7 +25,6 @@ public class StockApiClient {
     }
 
     public List<StockPrice> getPrices(String ticker) {
-        // 1. Ändra endpoint till WEEKLY_ADJUSTED
         String url = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol="
                 + ticker + "&apikey=" + apiKey;
 
@@ -34,7 +33,6 @@ public class StockApiClient {
         try {
             JsonNode root = objectMapper.readTree(json);
 
-            // 2. Ändra nod-namnet vi letar efter i JSON-svaret
             JsonNode timeSeries = root.get("Weekly Adjusted Time Series");
 
             if (timeSeries == null) {
@@ -45,7 +43,6 @@ public class StockApiClient {
             timeSeries.fields().forEachRemaining(entry -> {
                 String date = entry.getKey();
 
-                // 3. Hämta det split-justerade priset
                 double close = entry.getValue().get("5. adjusted close").asDouble();
 
                 prices.add(new StockPrice(date, close));
@@ -66,7 +63,7 @@ public class StockApiClient {
 
         try {
             JsonNode root = objectMapper.readTree(json);
-            // Bytt från annualEarnings till quarterlyEarnings
+
             JsonNode quarterlyEarnings = root.get("quarterlyEarnings");
 
             if (quarterlyEarnings == null) {
@@ -74,7 +71,7 @@ public class StockApiClient {
             }
 
             List<EarningsRecord> earnings = new ArrayList<>();
-            // Loopar nu över kvartalsdatan istället
+
             quarterlyEarnings.forEach(node -> {
                 String date = node.get("fiscalDateEnding").asText();
                 double eps = node.get("reportedEPS").asDouble();

@@ -159,7 +159,7 @@ function App() {
                 stroke="#3b82f6"
                 tick={{ fill: '#3b82f6' }}
                 domain={[0, 'auto']}
-                allowDataOverflow={true} // Tvingar klippning vid 0
+                allowDataOverflow={true}
               />
 
               <YAxis
@@ -168,7 +168,7 @@ function App() {
                 stroke="#10b981"
                 tick={{ fill: '#10b981' }}
                 domain={[0, 'auto']}
-                allowDataOverflow={true} // Tvingar klippning vid 0 även om det finns historiska förluster
+                allowDataOverflow={true}
               />
 
               <Tooltip
